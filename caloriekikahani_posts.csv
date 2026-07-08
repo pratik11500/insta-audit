@@ -1,0 +1,5 @@
+id,url,date,content_type,caption,likes,comments,views,hashtags,notes
+,,,,,"Data Note: Static posts from the profile grid were not individually accessible during the browser session due to Instagram scroll interaction constraints. Only Reels content was fully analyzed via direct URL visits. The profile has 87 total posts as shown on the profile page. Below are notes from visual observation of the posts grid.",,,,
+1,https://www.instagram.com/caloriekikahani/,Observed in grid,Static Post/Image,Visual content observed in posts grid - nutrition and food related imagery,N/A,N/A,N/A,Unknown,"Thumbnail visible - appears to be nutrition tip card"
+2,https://www.instagram.com/caloriekikahani/,Observed in grid,Static Post/Image,Visual content observed in posts grid - diet tip overlay text,N/A,N/A,N/A,Unknown,"Thumbnail visible - appears to be diet advice visual"
+3,https://www.instagram.com/caloriekikahani/,Observed in grid,Static Post/Image,Visual content observed in posts grid - food combination info,N/A,N/A,N/A,Unknown,"Thumbnail visible - appears to be food comparison visual"

@@ -1,0 +1,2674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=5.0" />
+  <title>@caloriekikahani – Instagram Audit Dashboard</title>
+  <meta name="description" content="Comprehensive Instagram audit for @caloriekikahani. Deep analysis of content performance, branding, growth strategy and 90-day plan." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #111118;
+      --bg-card: #16161f;
+      --bg-card-hover: #1c1c28;
+      --border: #2a2a3d;
+      --border-bright: #3d3d5c;
+      --accent-green: #22c55e;
+      --accent-green-dim: #15803d;
+      --accent-blue: #6366f1;
+      --accent-purple: #a855f7;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --accent-teal: #14b8a6;
+      --text-primary: #f0f0f8;
+      --text-secondary: #9898b8;
+      --text-muted: #5a5a7a;
+      --gradient-hero: linear-gradient(135deg, #0d1117 0%, #0f0f1e 50%, #0a0a15 100%);
+      --gradient-card: linear-gradient(145deg, #1a1a25, #111118);
+      --gradient-green: linear-gradient(135deg, #22c55e, #16a34a);
+      --gradient-purple: linear-gradient(135deg, #a855f7, #7c3aed);
+      --gradient-blue: linear-gradient(135deg, #6366f1, #4338ca);
+      --gradient-amber: linear-gradient(135deg, #f59e0b, #d97706);
+      --shadow-card: 0 4px 24px rgba(0,0,0,0.4);
+      --shadow-glow-green: 0 0 30px rgba(34, 197, 94, 0.15);
+      --shadow-glow-purple: 0 0 30px rgba(168, 85, 247, 0.15);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; zoom: 0.8; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+    ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 99px; }
+
+    /* ── HERO HEADER ── */
+    .hero {
+      background: var(--gradient-hero);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(34,197,94,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -150px; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 48px 32px 40px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-avatar {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #22c55e, #6366f1);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px; font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.3), var(--shadow-glow-green);
+      animation: avatarPulse 3s ease-in-out infinite;
+    }
+    @keyframes avatarPulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(34,197,94,0.3), 0 0 30px rgba(34,197,94,0.15); }
+      50% { box-shadow: 0 0 0 8px rgba(34,197,94,0.15), 0 0 50px rgba(34,197,94,0.25); }
+    }
+    .hero-info { flex: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.3);
+      color: var(--accent-green);
+      font-size: 11px; font-weight: 600;
+      padding: 4px 12px; border-radius: 99px;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      background: linear-gradient(135deg, #f0f0f8 0%, #9898b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .hero-sub {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .hero-stats {
+      display: flex; gap: 24px; flex-wrap: wrap;
+    }
+    .hero-stat {
+      text-align: center;
+    }
+    .hero-stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px; font-weight: 700;
+      color: var(--text-primary);
+    }
+    .hero-stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .hero-stat-divider {
+      width: 1px;
+      background: var(--border);
+      align-self: stretch;
+    }
+    .hero-audit-meta {
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .hero-audit-meta p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .hero-audit-meta strong { color: var(--text-secondary); }
+
+    /* ── MOBILE TOP BAR ── */
+    .mobile-topbar {
+      display: none;
+      position: sticky; top: 0; z-index: 200;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      padding: 0 16px;
+      height: 56px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .mobile-brand {
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px; font-weight: 700;
+      color: var(--text-primary);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .mobile-brand-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent-green);
+      animation: avatarPulse 2s ease-in-out infinite;
+    }
+    .mobile-active-label {
+      font-size: 12px; font-weight: 600;
+      color: var(--accent-green);
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.25);
+      padding: 4px 12px; border-radius: 99px;
+      flex: 1; text-align: center;
+    }
+    .hamburger-btn {
+      width: 40px; height: 40px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 5px;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .hamburger-btn:hover { background: rgba(255,255,255,0.1); }
+    .hamburger-btn span {
+      width: 18px; height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.25s;
+    }
+    .hamburger-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger-btn.open span:nth-child(2) { opacity: 0; }
+    .hamburger-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* ── SIDEBAR OVERLAY ── */
+    .nav-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 150;
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .nav-overlay.open { opacity: 1; }
+
+    /* ── SIDEBAR PANEL ── */
+    .nav-sidebar {
+      position: fixed;
+      top: 0; right: -100%;
+      width: min(320px, 88vw);
+      height: 100vh;
+      background: var(--bg-secondary);
+      border-left: 1px solid var(--border);
+      z-index: 160;
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
+      display: flex; flex-direction: column;
+    }
+    .nav-sidebar.open { right: 0; }
+    .sidebar-header {
+      padding: 20px 20px 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .sidebar-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px; font-weight: 700;
+      color: var(--text-primary);
+    }
+    .sidebar-close {
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 18px; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .sidebar-close:hover { background: rgba(255,255,255,0.1); color: var(--text-primary); }
+    .sidebar-nav {
+      padding: 16px 12px;
+      display: flex; flex-direction: column; gap: 4px;
+      flex: 1;
+    }
+    .sidebar-nav-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 13px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .sidebar-nav-item:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: var(--border);
+    }
+    .sidebar-nav-item.active {
+      background: rgba(34,197,94,0.08);
+      border-color: rgba(34,197,94,0.25);
+    }
+    .sidebar-nav-emoji {
+      font-size: 20px;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      flex-shrink: 0;
+    }
+    .sidebar-nav-item.active .sidebar-nav-emoji {
+      background: rgba(34,197,94,0.15);
+    }
+    .sidebar-nav-text { flex: 1; }
+    .sidebar-nav-label {
+      font-size: 14px; font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .sidebar-nav-item.active .sidebar-nav-label {
+      color: var(--accent-green);
+    }
+    .sidebar-nav-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+    .sidebar-nav-arrow {
+      color: var(--text-muted);
+      font-size: 12px;
+      opacity: 0.5;
+    }
+    .sidebar-nav-item.active .sidebar-nav-arrow {
+      color: var(--accent-green);
+      opacity: 1;
+    }
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* ── DESKTOP NAV TABS ── */
+    .nav-tabs {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-tabs-inner {
+      max-width: 1400px; margin: 0 auto;
+      padding: 0 24px;
+      display: flex; gap: 0; overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-tabs-inner::-webkit-scrollbar { display: none; }
+    .nav-tab {
+      padding: 0 6px;
+      font-size: 13px; font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      border: none; background: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+      display: flex; align-items: center; gap: 6px;
+      height: 52px;
+    }
+    .nav-tab .tab-emoji { font-size: 15px; }
+    .nav-tab .tab-label { }
+    .nav-tab:hover { color: var(--text-secondary); }
+    .nav-tab.active {
+      color: var(--accent-green);
+      border-bottom-color: var(--accent-green);
+    }
+    /* Pill separator between tabs */
+    .nav-tab-sep {
+      width: 1px; background: var(--border);
+      margin: 14px 4px; flex-shrink: 0;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 32px;
+    }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--gradient-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      border-color: var(--border-bright);
+      box-shadow: var(--shadow-card);
+    }
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px; font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* ── GRID UTILITIES ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+
+    /* ── STAT CARDS ── */
+    .stat-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 22px 24px;
+      transition: all 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    }
+    .stat-card.green::before { background: var(--gradient-green); }
+    .stat-card.blue::before { background: var(--gradient-blue); }
+    .stat-card.purple::before { background: var(--gradient-purple); }
+    .stat-card.amber::before { background: var(--gradient-amber); }
+    .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card); border-color: var(--border-bright); }
+    .stat-label {
+      font-size: 11px; font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .stat-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px; font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-value.green { color: var(--accent-green); }
+    .stat-value.blue { color: var(--accent-blue); }
+    .stat-value.purple { color: var(--accent-purple); }
+    .stat-value.amber { color: var(--accent-amber); }
+    .stat-detail {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ── SECTION HEADERS ── */
+    .sec-header {
+      margin-bottom: 32px;
+    }
+    .sec-header h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px; font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .sec-header p {
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+    .sec-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 40px 0;
+    }
+
+    /* ── TABLES ── */
+    .table-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .search-input {
+      flex: 1; min-width: 200px; max-width: 360px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      font-size: 13px;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--accent-green); }
+    .search-input::placeholder { color: var(--text-muted); }
+    .export-btn {
+      padding: 10px 18px;
+      font-size: 13px; font-weight: 600;
+      background: var(--gradient-green);
+      color: #fff;
+      border: none; border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .export-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    thead { background: rgba(99,102,241,0.08); }
+    th {
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 11px; font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      cursor: pointer;
+      white-space: nowrap;
+      user-select: none;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    th:hover { color: var(--text-secondary); }
+    th .sort-icon { margin-left: 4px; opacity: 0.5; }
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(42,42,61,0.5);
+      color: var(--text-secondary);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tbody tr { transition: background 0.15s; }
+    tbody tr:hover { background: rgba(99,102,241,0.04); }
+    .td-link {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .td-link:hover { color: var(--accent-purple); text-decoration: underline; }
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 99px;
+      font-size: 11px; font-weight: 600;
+    }
+    .badge-green { background: rgba(34,197,94,0.15); color: var(--accent-green); }
+    .badge-purple { background: rgba(168,85,247,0.15); color: var(--accent-purple); }
+    .badge-amber { background: rgba(245,158,11,0.15); color: var(--accent-amber); }
+    .badge-blue { background: rgba(99,102,241,0.15); color: var(--accent-blue); }
+    .badge-red { background: rgba(239,68,68,0.15); color: var(--accent-red); }
+    .view-bar {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .view-bar-track {
+      flex: 1; height: 5px;
+      background: var(--bg-secondary);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .view-bar-fill {
+      height: 100%;
+      background: var(--gradient-green);
+      border-radius: 99px;
+      transition: width 0.6s ease;
+    }
+    .view-bar-num { font-size: 12px; font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+
+    /* ── CHARTS ── */
+    .chart-container {
+      position: relative;
+      height: 280px;
+    }
+    .chart-container-tall { height: 360px; }
+
+    /* ── SWOT ── */
+    .swot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .swot-card {
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 1px solid transparent;
+    }
+    .swot-s { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.2); }
+    .swot-w { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.2); }
+    .swot-o { background: rgba(99,102,241,0.08); border-color: rgba(99,102,241,0.2); }
+    .swot-t { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.2); }
+    .swot-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px; font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .swot-s .swot-label { color: var(--accent-green); }
+    .swot-w .swot-label { color: var(--accent-red); }
+    .swot-o .swot-label { color: var(--accent-blue); }
+    .swot-t .swot-label { color: var(--accent-amber); }
+    .swot-sublabel {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .swot-list { list-style: none; }
+    .swot-list li {
+      font-size: 13px;
+      color: var(--text-secondary);
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex; align-items: flex-start; gap: 8px;
+      line-height: 1.5;
+    }
+    .swot-list li:last-child { border-bottom: none; }
+    .swot-list li::before { flex-shrink: 0; margin-top: 2px; }
+    .swot-s .swot-list li::before { content: '✓'; color: var(--accent-green); }
+    .swot-w .swot-list li::before { content: '✕'; color: var(--accent-red); }
+    .swot-o .swot-list li::before { content: '→'; color: var(--accent-blue); }
+    .swot-t .swot-list li::before { content: '⚠'; color: var(--accent-amber); }
+
+    /* ── IMPROVEMENT CARDS ── */
+    .improve-list { display: flex; flex-direction: column; gap: 14px; }
+    .improve-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      display: flex; gap: 18px; align-items: flex-start;
+      transition: border-color 0.2s;
+    }
+    .improve-card:hover { border-color: var(--border-bright); }
+    .improve-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px; font-weight: 800;
+      color: var(--accent-green);
+      opacity: 0.4;
+      flex-shrink: 0; min-width: 36px;
+      line-height: 1;
+    }
+    .improve-body { flex: 1; }
+    .improve-title {
+      font-weight: 600; font-size: 14px;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .improve-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .improve-tag {
+      font-size: 11px; font-weight: 600;
+      padding: 2px 8px; border-radius: 99px;
+      flex-shrink: 0; align-self: flex-start;
+    }
+    .tag-high { background: rgba(239,68,68,0.12); color: var(--accent-red); }
+    .tag-med { background: rgba(245,158,11,0.12); color: var(--accent-amber); }
+    .tag-low { background: rgba(34,197,94,0.12); color: var(--accent-green); }
+
+    /* ── CONTENT PLAN ── */
+    .plan-week { margin-bottom: 32px; }
+    .week-header {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--accent-green);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .day-list { display: flex; flex-direction: column; gap: 10px; }
+    .day-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      display: grid; grid-template-columns: 90px 1fr auto;
+      gap: 12px; align-items: start;
+      transition: border-color 0.2s;
+    }
+    .day-item:hover { border-color: var(--border-bright); }
+    .day-label {
+      font-size: 12px; font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .day-content-title {
+      font-size: 13px; font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+    .day-content-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .content-type-pill {
+      font-size: 11px; font-weight: 600;
+      padding: 3px 10px; border-radius: 99px;
+      white-space: nowrap;
+    }
+    .pill-reel { background: rgba(168,85,247,0.15); color: var(--accent-purple); }
+    .pill-post { background: rgba(99,102,241,0.15); color: var(--accent-blue); }
+    .pill-story { background: rgba(20,184,166,0.15); color: var(--accent-teal); }
+
+    /* ── STRATEGY TIMELINE ── */
+    .strategy-phase { margin-bottom: 36px; }
+    .phase-header {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 20px;
+    }
+    .phase-num {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--gradient-purple);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px; font-weight: 800;
+      color: #fff; flex-shrink: 0;
+    }
+    .phase-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px; font-weight: 700;
+    }
+    .phase-subtitle { font-size: 13px; color: var(--text-muted); }
+    .phase-items {
+      margin-left: 64px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .phase-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-purple);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 14px 18px;
+    }
+    .phase-item-title {
+      font-weight: 600; font-size: 14px; margin-bottom: 4px;
+    }
+    .phase-item-desc {
+      font-size: 13px; color: var(--text-muted); line-height: 1.6;
+    }
+
+    /* ── PROFILE BIO CARD ── */
+    .bio-section { display: flex; gap: 24px; flex-wrap: wrap; }
+    .bio-visual {
+      flex: 0 0 280px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+    .bio-avatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #22c55e, #6366f1);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px; font-weight: 800; color: #fff;
+      margin: 0 auto 16px;
+    }
+    .bio-name { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+    .bio-handle { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+    .bio-text {
+      font-size: 13px; color: var(--text-secondary);
+      line-height: 1.8; text-align: left;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+    .bio-stats-row {
+      display: flex; gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .bio-stat-item {
+      flex: 1; padding: 12px 8px; text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .bio-stat-item:last-child { border-right: none; }
+    .bio-stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px; font-weight: 700;
+    }
+    .bio-stat-lbl { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    .bio-analysis { flex: 1; min-width: 300px; }
+    .analysis-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      margin-bottom: 14px;
+    }
+    .analysis-item-title {
+      font-weight: 600; font-size: 14px;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .score-bar {
+      display: flex; align-items: center; gap: 10px; margin: 8px 0;
+    }
+    .score-track {
+      flex: 1; height: 8px; background: var(--bg-secondary);
+      border-radius: 99px; overflow: hidden;
+    }
+    .score-fill {
+      height: 100%; border-radius: 99px;
+      transition: width 1s ease;
+    }
+    .score-label { font-size: 13px; font-weight: 700; color: var(--text-primary); min-width: 30px; text-align: right; }
+
+    /* ── HIGHLIGHTS DISPLAY ── */
+    .highlights-row {
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .highlight-item {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      cursor: pointer;
+    }
+    .highlight-ring {
+      width: 68px; height: 68px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f59e0b, #ef4444, #a855f7);
+      padding: 3px;
+    }
+    .highlight-inner {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: var(--bg-card);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .highlight-name {
+      font-size: 11px; font-weight: 600;
+      color: var(--text-secondary);
+      text-align: center; max-width: 72px;
+    }
+
+    /* ── EXECUTIVE SUMMARY ── */
+    .exec-summary {
+      background: linear-gradient(145deg, rgba(34,197,94,0.05), rgba(99,102,241,0.05));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px;
+      margin-bottom: 32px;
+      position: relative; overflow: hidden;
+    }
+    .exec-summary::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent-green), var(--accent-blue), var(--accent-purple));
+    }
+    .exec-summary h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px; font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .exec-summary p {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+    .key-findings {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px; margin-top: 24px;
+    }
+    .key-finding {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+    }
+    .key-finding-icon { font-size: 22px; margin-bottom: 8px; }
+    .key-finding-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+    .key-finding-val { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── PILLS / HASHTAGS ── */
+    .pill-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill {
+      padding: 5px 12px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      font-size: 12px; color: var(--text-secondary);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 24px 32px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .swot-grid { grid-template-columns: 1fr; }
+      .hero-inner { flex-direction: column; text-align: center; }
+      .hero-stats { justify-content: center; }
+      .hero-audit-meta { text-align: center; }
+      .container { padding: 24px 16px; }
+      .phase-items { margin-left: 0; }
+      .bio-section { flex-direction: column; }
+      .bio-visual { flex: none; }
+      .day-item { grid-template-columns: 1fr; }
+    }
+
+    /* ── MOBILE ≤ 768px ── */
+    @media (max-width: 768px) {
+      html { zoom: 1; } /* reset zoom on mobile — viewport handles it */
+
+      /* Show mobile topbar, hide desktop nav */
+      .mobile-topbar { display: flex; }
+      .nav-tabs { display: none; }
+      .nav-overlay { display: block; pointer-events: none; }
+      .nav-overlay.open { pointer-events: auto; }
+
+      /* Hero */
+      .hero-inner {
+        padding: 24px 16px 20px;
+        gap: 16px;
+      }
+      .hero-avatar { width: 72px; height: 72px; font-size: 20px; }
+      .hero-title { font-size: clamp(22px, 6vw, 32px); }
+      .hero-sub { font-size: 12px; }
+      .hero-stat-num { font-size: 18px; }
+      .hero-stat-label { font-size: 10px; }
+      .hero-stats { gap: 14px; }
+      .hero-audit-meta { display: none; }
+
+      /* Stat cards */
+      .stat-value { font-size: 24px; }
+      .grid-4 { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+      /* Cards */
+      .card { padding: 18px 14px; }
+      .card-title { font-size: 15px; }
+
+      /* Charts */
+      .chart-container { height: 220px; }
+      .chart-container-tall { height: 280px; }
+
+      /* Section headers */
+      .sec-header h2 { font-size: 22px; }
+
+      /* Tables — horizontal scroll */
+      .table-wrap { overflow-x: auto; }
+      table { min-width: 580px; }
+      .table-controls { flex-direction: column; align-items: stretch; }
+      .search-input { max-width: 100%; }
+
+      /* Improve cards */
+      .improve-card { flex-direction: column; gap: 10px; }
+      .improve-tag { align-self: flex-start; }
+
+      /* Plan day items */
+      .day-item { gap: 8px; }
+      .day-label { font-size: 11px; }
+
+      /* SWOT */
+      .swot-grid { grid-template-columns: 1fr; }
+      .swot-card { padding: 18px; }
+
+      /* Strategy */
+      .phase-header { gap: 12px; }
+      .phase-num { width: 40px; height: 40px; font-size: 15px; }
+      .phase-title { font-size: 17px; }
+
+      /* Bio */
+      .bio-visual { width: 100%; }
+      .exec-summary { padding: 22px 16px; }
+      .exec-summary h3 { font-size: 18px; }
+
+      /* Key findings responsive */
+      .key-findings { grid-template-columns: 1fr 1fr; }
+
+      /* Footer */
+      footer { padding: 16px; }
+    }
+
+    /* ── VERY SMALL ≤ 420px ── */
+    @media (max-width: 420px) {
+      .grid-4 { grid-template-columns: 1fr; }
+      .hero-stats { gap: 8px; }
+      .hero-stat-num { font-size: 16px; }
+      .key-findings { grid-template-columns: 1fr; }
+      .highlights-row { gap: 10px; }
+      .highlight-ring { width: 56px; height: 56px; }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animated { animation: fadeInUp 0.4s ease forwards; }
+
+    /* ── PERFORMANCE INDICATOR ── */
+    .perf-high { color: var(--accent-green); }
+    .perf-mid { color: var(--accent-amber); }
+    .perf-low { color: var(--accent-red); }
+
+    .no-data {
+      text-align: center;
+      padding: 48px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-avatar">CK</div>
+    <div class="hero-info">
+      <div class="hero-badge">🔍 Instagram Audit · July 2026</div>
+      <h1 class="hero-title">Calorie Ki Kahani</h1>
+      <p class="hero-sub">@caloriekikahani · Health/Beauty · Hindi Nutrition Content Creator</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num" style="color:#22c55e">50</div>
+          <div class="hero-stat-label">Followers</div>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">87</div>
+          <div class="hero-stat-label">Posts</div>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" style="color:#a855f7">1.35M</div>
+          <div class="hero-stat-label">Reel Views</div>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" style="color:#6366f1">89.9K</div>
+          <div class="hero-stat-label">Avg Views/Reel</div>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" style="color:#f59e0b">15</div>
+          <div class="hero-stat-label">Reels Analyzed</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-audit-meta">
+      <p>Audit Date</p>
+      <p><strong>July 7, 2026</strong></p>
+      <p style="margin-top:8px">Live Data Source</p>
+      <p><strong>Instagram Browser Session</strong></p>
+    </div>
+  </div>
+</header>
+
+<!-- ── MOBILE TOP BAR ── -->
+<div class="mobile-topbar">
+  <div class="mobile-brand">
+    <div class="mobile-brand-dot"></div>
+    CK Audit
+  </div>
+  <div class="mobile-active-label" id="mobileActiveLabel">📊 Executive Summary</div>
+  <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()" aria-label="Open navigation">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+
+<!-- ── SIDEBAR OVERLAY ── -->
+<div class="nav-overlay" id="navOverlay" onclick="closeSidebar()"></div>
+
+<!-- ── SIDEBAR PANEL ── -->
+<div class="nav-sidebar" id="navSidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">📋 Sections</div>
+    <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-nav-item active" onclick="showTab('summary', null); closeSidebar()" id="side-summary">
+      <div class="sidebar-nav-emoji">📊</div>
+      <div class="sidebar-nav-text">
+        <div class="sidebar-nav-label">Executive Summary</div>
+        <div class="sidebar-nav-desc">KPIs, key findings & charts</div>
+      </div>
+      <div class="sidebar-nav-arrow">›</div>
+    </div>
+    <div class="sidebar-nav-item" onclick="showTab('profile', null); closeSidebar()" id="side-profile">
+      <div class="sidebar-nav-emoji">👤</div>
+      <div class="sidebar-nav-text">
+        <div class="sidebar-nav-label">Profile Audit</div>
+        <div class="sidebar-nav-desc">Bio, branding & completeness</div>
+      </div>
+      <div class="sidebar-nav-arrow">›</div>
+    </div>
+    <div class="sidebar-nav-item" onclick="showTab('content', null); closeSidebar()" id="side-content">
+      <div class="sidebar-nav-emoji">🎬</div>
+      <div class="sidebar-nav-text">
+        <div class="sidebar-nav-label">Content Analysis</div>
+        <div class="sidebar-nav-desc">Hook types, themes & performance</div>
+      </div>
+      <div class="sidebar-nav-arrow">›</div>
+    </div>
+    <div class="sidebar-nav-item" onclick="showTab('reels', null); closeSidebar()" id="side-reels">
+      <div class="sidebar-nav-emoji">📱</div>
+      <div class="sidebar-nav-text">
+        <div class="sidebar-nav-label">Reels Data</div>
+        <div class="sidebar-nav-desc">Full dataset, search & export</div>
+      </div>
+      <div class="sidebar-nav-arrow">›</div>
+    </div>
+    <div class="sidebar-nav-item" onclick="showTab('swot', null); closeSidebar()" id="side-swot">
+      <div class="sidebar-nav-emoji">⚖️</div>
+      <div class="sidebar-nav-text">
+        <div class="sidebar-nav-label">SWOT Analysis</div>
+        <div class="sidebar-nav-desc">Strengths, weaknesses, opportunities</div>
+      </div>
+      <div class="sidebar-nav-arrow">›</div>
+    </div>
+    <div class="sidebar-nav-item" onclick="showTab('improvements', null); closeSidebar()" id="side-improvements">
+      <div class="sidebar-nav-emoji">🚀</div>
+      <div class="sidebar-nav-text">
+        <div class="sidebar-nav-label">Top 20 Improvements</div>
+        <div class="sidebar-nav-desc">Prioritized action items</div>
+      </div>
+      <div class="sidebar-nav-arrow">›</div>
+    </div>
+    <div class="sidebar-nav-item" onclick="showTab('plan30', null); closeSidebar()" id="side-plan30">
+      <div class="sidebar-nav-emoji">📅</div>
+      <div class="sidebar-nav-text">
+        <div class="sidebar-nav-label">30-Day Plan</div>
+        <div class="sidebar-nav-desc">Week-by-week content calendar</div>
+      </div>
+      <div class="sidebar-nav-arrow">›</div>
+    </div>
+    <div class="sidebar-nav-item" onclick="showTab('strategy90', null); closeSidebar()" id="side-strategy90">
+      <div class="sidebar-nav-emoji">🎯</div>
+      <div class="sidebar-nav-text">
+        <div class="sidebar-nav-label">90-Day Strategy</div>
+        <div class="sidebar-nav-desc">Phase-by-phase growth roadmap</div>
+      </div>
+      <div class="sidebar-nav-arrow">›</div>
+    </div>
+  </nav>
+  <div class="sidebar-footer">@caloriekikahani · Instagram Audit · July 2026</div>
+</div>
+
+<!-- ── DESKTOP NAV TABS ── -->
+<nav class="nav-tabs">
+  <div class="nav-tabs-inner">
+    <button class="nav-tab active" onclick="showTab('summary', this)" id="tab-summary"><span class="tab-emoji">📊</span><span class="tab-label">Executive Summary</span></button>
+    <div class="nav-tab-sep"></div>
+    <button class="nav-tab" onclick="showTab('profile', this)" id="tab-profile"><span class="tab-emoji">👤</span><span class="tab-label">Profile Audit</span></button>
+    <div class="nav-tab-sep"></div>
+    <button class="nav-tab" onclick="showTab('content', this)" id="tab-content"><span class="tab-emoji">🎬</span><span class="tab-label">Content Analysis</span></button>
+    <div class="nav-tab-sep"></div>
+    <button class="nav-tab" onclick="showTab('reels', this)" id="tab-reels"><span class="tab-emoji">📱</span><span class="tab-label">Reels Data</span></button>
+    <div class="nav-tab-sep"></div>
+    <button class="nav-tab" onclick="showTab('swot', this)" id="tab-swot"><span class="tab-emoji">⚖️</span><span class="tab-label">SWOT Analysis</span></button>
+    <div class="nav-tab-sep"></div>
+    <button class="nav-tab" onclick="showTab('improvements', this)" id="tab-improvements"><span class="tab-emoji">🚀</span><span class="tab-label">Top 20 Improvements</span></button>
+    <div class="nav-tab-sep"></div>
+    <button class="nav-tab" onclick="showTab('plan30', this)" id="tab-plan30"><span class="tab-emoji">📅</span><span class="tab-label">30-Day Plan</span></button>
+    <div class="nav-tab-sep"></div>
+    <button class="nav-tab" onclick="showTab('strategy90', this)" id="tab-strategy90"><span class="tab-emoji">🎯</span><span class="tab-label">90-Day Strategy</span></button>
+  </div>
+</nav>
+
+<!-- ─────────────────────────────────────────────── -->
+<!-- SECTION: EXECUTIVE SUMMARY                     -->
+<!-- ─────────────────────────────────────────────── -->
+<main>
+<section id="summary" class="section active">
+  <div class="container">
+
+    <div class="exec-summary animated">
+      <h3>Executive Summary</h3>
+      <p>
+        <strong>@caloriekikahani</strong> (Calorie Ki Kahani) is an early-stage Hindi-language nutrition content account operating in the Health/Beauty category. Despite having only <strong>50 followers</strong> and 87 posts, the account demonstrates remarkable organic reach potential — the 15 reels analyzed collectively accumulated <strong>1.35 million views</strong>, with the best-performing reel reaching <strong>248,000 views</strong>. This is a striking indicator: the content is resonating with Instagram's recommendation algorithm far beyond its follower base.
+      </p>
+      <p>
+        The account's content centers on Ayurvedic nutrition education, morning habit guidance, food myth-busting, and practical Indian dietary remedies — all delivered in Hindi with high visual and audio accessibility. The <strong>critical challenge is engagement conversion</strong>: despite strong view counts, like-to-view ratios are extremely low (averaging 0.014%), indicating viewers are consuming content passively rather than actively engaging. Comments are also scarce (avg 2.3/reel), and there are no visible hashtag strategies, CTAs, or consistent posting schedules visible in the analyzed reels.
+      </p>
+      <p>
+        The account has <strong>strong viral potential</strong> as evidenced by myth-busting and food-combination content performing best (230K–248K views). Monetization readiness is low due to minimal follower count, but the organic discovery rate suggests that with strategic improvements to engagement hooks, CTAs, hashtag strategy, and posting consistency, rapid follower growth is achievable within 90 days.
+      </p>
+
+      <div class="key-findings">
+        <div class="key-finding">
+          <div class="key-finding-icon">🔥</div>
+          <div class="key-finding-title">Best Performing Reel</div>
+          <div class="key-finding-val">Makhana Milk Before Bed — 248K views, 26 likes</div>
+        </div>
+        <div class="key-finding">
+          <div class="key-finding-icon">📉</div>
+          <div class="key-finding-title">Lowest Performing Reel</div>
+          <div class="key-finding-val">Curd Benefits — 20.1K views, 1 like</div>
+        </div>
+        <div class="key-finding">
+          <div class="key-finding-icon">⚡</div>
+          <div class="key-finding-title">Strongest Hook Pattern</div>
+          <div class="key-finding-val">Myth-busting + Warning hooks (avg 171K views)</div>
+        </div>
+        <div class="key-finding">
+          <div class="key-finding-icon">😴</div>
+          <div class="key-finding-title">Weakest Hook Pattern</div>
+          <div class="key-finding-val">Generic "benefits of X" hooks (avg 24.8K views)</div>
+        </div>
+        <div class="key-finding">
+          <div class="key-finding-icon">📊</div>
+          <div class="key-finding-title">Engagement Gap</div>
+          <div class="key-finding-val">High views, critically low like/comment interaction rate</div>
+        </div>
+        <div class="key-finding">
+          <div class="key-finding-icon">💰</div>
+          <div class="key-finding-title">Monetization Readiness</div>
+          <div class="key-finding-val">Low — needs 1K+ followers first for link sticker</div>
+        </div>
+        <div class="key-finding">
+          <div class="key-finding-icon">🌱</div>
+          <div class="key-finding-title">Growth Signal</div>
+          <div class="key-finding-val">Algorithm discovery already active — needs conversion</div>
+        </div>
+        <div class="key-finding">
+          <div class="key-finding-icon">🎯</div>
+          <div class="key-finding-title">Key Opportunity</div>
+          <div class="key-finding-val">Add CTAs + hashtags to convert views to followers</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI STATS -->
+    <div class="sec-header">
+      <h2>Key Performance Indicators</h2>
+      <p>Metrics derived from 15 reels analyzed via live Instagram session</p>
+    </div>
+    <div class="grid-4" style="margin-bottom:32px">
+      <div class="stat-card green">
+        <div class="stat-label">Total Reel Views</div>
+        <div class="stat-value green">1.35M</div>
+        <div class="stat-detail">Across 15 reels analyzed</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-label">Average Views / Reel</div>
+        <div class="stat-value purple">89.9K</div>
+        <div class="stat-detail">Far exceeds follower count of 50</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-label">Peak Reel Views</div>
+        <div class="stat-value blue">248K</div>
+        <div class="stat-detail">Makhana milk before bed</div>
+      </div>
+      <div class="stat-card amber">
+        <div class="stat-label">Avg Engagement Rate</div>
+        <div class="stat-value amber">1.4%</div>
+        <div class="stat-detail">Likes+Comments / Views × 100</div>
+      </div>
+    </div>
+
+    <!-- VIEWS CHART -->
+    <div class="grid-2" style="gap:24px">
+      <div class="card">
+        <div class="card-title">📈 Views Distribution — All 15 Reels</div>
+        <div class="card-sub">Sorted by performance descending</div>
+        <div class="chart-container">
+          <canvas id="viewsBarChart"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🍩 Content Theme Breakdown</div>
+        <div class="card-sub">Topics covered across analyzed reels</div>
+        <div class="chart-container">
+          <canvas id="themeDonut"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-divider"></div>
+
+    <!-- TOP vs BOTTOM -->
+    <div class="sec-header">
+      <h2>Best vs Worst Performing Content</h2>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title" style="color:var(--accent-green)">🏆 Top 5 Reels by Views</div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px">
+          <div class="view-bar">
+            <div style="font-size:12px;color:var(--text-muted);min-width:180px">Makhana milk before bed</div>
+            <div class="view-bar-track"><div class="view-bar-fill" style="width:100%"></div></div>
+            <div class="view-bar-num">248K</div>
+          </div>
+          <div class="view-bar">
+            <div style="font-size:12px;color:var(--text-muted);min-width:180px">Morning tea warning</div>
+            <div class="view-bar-track"><div class="view-bar-fill" style="width:92.7%"></div></div>
+            <div class="view-bar-num">230K</div>
+          </div>
+          <div class="view-bar">
+            <div style="font-size:12px;color:var(--text-muted);min-width:180px">Fruits for weight goals</div>
+            <div class="view-bar-track"><div class="view-bar-fill" style="width:74.6%"></div></div>
+            <div class="view-bar-num">185K</div>
+          </div>
+          <div class="view-bar">
+            <div style="font-size:12px;color:var(--text-muted);min-width:180px">Tea: nectar or acid?</div>
+            <div class="view-bar-track"><div class="view-bar-fill" style="width:45.6%"></div></div>
+            <div class="view-bar-num">113K</div>
+          </div>
+          <div class="view-bar">
+            <div style="font-size:12px;color:var(--text-muted);min-width:180px">Best morning breakfast</div>
+            <div class="view-bar-track"><div class="view-bar-fill" style="width:32.6%"></div></div>
+            <div class="view-bar-num">80.8K</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--accent-red)">📉 Bottom 5 Reels by Views</div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px">
+          <div class="view-bar">
+            <div style="font-size:12px;color:var(--text-muted);min-width:180px">Curd benefits</div>
+            <div class="view-bar-track"><div class="view-bar-fill" style="width:8.1%;background:linear-gradient(135deg,#ef4444,#b91c1c)"></div></div>
+            <div class="view-bar-num">20.1K</div>
+          </div>
+          <div class="view-bar">
+            <div style="font-size:12px;color:var(--text-muted);min-width:180px">Jaggery & peanut</div>
+            <div class="view-bar-track"><div class="view-bar-fill" style="width:9.8%;background:linear-gradient(135deg,#ef4444,#b91c1c)"></div></div>
+            <div class="view-bar-num">24.4K</div>
+          </div>
+          <div class="view-bar">
+            <div style="font-size:12px;color:var(--text-muted);min-width:180px">Coconut oil benefits</div>
+            <div class="view-bar-track"><div class="view-bar-fill" style="width:11.9%;background:linear-gradient(135deg,#ef4444,#b91c1c)"></div></div>
+            <div class="view-bar-num">29.5K</div>
+          </div>
+          <div class="view-bar">
+            <div style="font-size:12px;color:var(--text-muted);min-width:180px">Fennel syrup summer</div>
+            <div class="view-bar-track"><div class="view-bar-fill" style="width:17.2%;background:linear-gradient(135deg,#ef4444,#b91c1c)"></div></div>
+            <div class="view-bar-num">42.6K</div>
+          </div>
+          <div class="view-bar">
+            <div style="font-size:12px;color:var(--text-muted);min-width:180px">Rice Kanji gut health</div>
+            <div class="view-bar-track"><div class="view-bar-fill" style="width:19.9%;background:linear-gradient(135deg,#ef4444,#b91c1c)"></div></div>
+            <div class="view-bar-num">49.3K</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────── -->
+<!-- SECTION: PROFILE AUDIT                         -->
+<!-- ─────────────────────────────────────────────── -->
+<section id="profile" class="section">
+  <div class="container">
+    <div class="sec-header">
+      <h2>Profile Audit</h2>
+      <p>Deep analysis of branding, bio effectiveness, visual identity, and audience signals</p>
+    </div>
+
+    <div class="bio-section" style="margin-bottom:32px">
+      <div class="bio-visual">
+        <div class="bio-avatar">CK</div>
+        <div class="bio-name">Calorie Ki Kahani</div>
+        <div class="bio-handle">@caloriekikahani</div>
+        <div class="bio-text">
+          🥗 Weight Loss &amp; Nutrition Tips<br>
+          🌿 Ayurveda + Science Based Facts<br>
+          📅 Daily Health Reels<br>
+          👇 Follow for easy health tips
+        </div>
+        <div class="bio-stats-row">
+          <div class="bio-stat-item">
+            <div class="bio-stat-num" style="color:var(--accent-green)">50</div>
+            <div class="bio-stat-lbl">Followers</div>
+          </div>
+          <div class="bio-stat-item">
+            <div class="bio-stat-num">32</div>
+            <div class="bio-stat-lbl">Following</div>
+          </div>
+          <div class="bio-stat-item">
+            <div class="bio-stat-num">87</div>
+            <div class="bio-stat-lbl">Posts</div>
+          </div>
+        </div>
+        <div style="margin-top:20px">
+          <div class="card-sub" style="font-size:11px;text-align:left;margin-bottom:10px">HIGHLIGHTS (4)</div>
+          <div class="highlights-row" style="justify-content:center">
+            <div class="highlight-item">
+              <div class="highlight-ring"><div class="highlight-inner">🍽️</div></div>
+              <div class="highlight-name">Recipes</div>
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-ring"><div class="highlight-inner">❌</div></div>
+              <div class="highlight-name">Myths</div>
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-ring"><div class="highlight-inner">💡</div></div>
+              <div class="highlight-name">Diet Tips</div>
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-ring"><div class="highlight-inner">🥗</div></div>
+              <div class="highlight-name">Healthy यू</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-analysis">
+        <div class="analysis-item">
+          <div class="analysis-item-title">⭐ Bio Score</div>
+          <div class="score-bar">
+            <div class="score-track"><div class="score-fill" style="width:60%;background:var(--gradient-amber)"></div></div>
+            <div class="score-label" style="color:var(--accent-amber)">6/10</div>
+          </div>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:6px">
+            Bio uses relevant emojis and touches on value proposition. However, missing: niche specificity, social proof, a clear CTA with link, and target audience language. "Daily Health Reels" claim is bold but lacks credibility signal at 50 followers.
+          </p>
+        </div>
+
+        <div class="analysis-item">
+          <div class="analysis-item-title">🎨 Branding Score</div>
+          <div class="score-bar">
+            <div class="score-track"><div class="score-fill" style="width:55%;background:var(--gradient-amber)"></div></div>
+            <div class="score-label" style="color:var(--accent-amber)">5.5/10</div>
+          </div>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:6px">
+            The profile logo (green leaf + food + flames) is distinctive and conveys health/nutrition. Account name "Calorie Ki Kahani" is catchy and memorable. Weakness: no visible color palette consistency across content; the brand color system appears undefined.
+          </p>
+        </div>
+
+        <div class="analysis-item">
+          <div class="analysis-item-title">📱 Profile Completeness</div>
+          <div class="score-bar">
+            <div class="score-track"><div class="score-fill" style="width:50%;background:var(--gradient-amber)"></div></div>
+            <div class="score-label" style="color:var(--accent-amber)">5/10</div>
+          </div>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:6px">
+            Link goes to Facebook page rather than a landing page or Linktree. No email shown. Category is "Health/beauty" which is appropriate. Highlights are set up (positive). No pinned posts visible. Profile is public (good for discoverability).
+          </p>
+        </div>
+
+        <div class="analysis-item">
+          <div class="analysis-item-title">🔗 Website / Link Strategy</div>
+          <div class="score-bar">
+            <div class="score-track"><div class="score-fill" style="width:25%;background:var(--gradient-purple)"></div></div>
+            <div class="score-label" style="color:var(--accent-purple)">2.5/10</div>
+          </div>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:6px">
+            Critical weakness: profile link points to a Facebook page (ID: 1040001565870921) which is not optimized for conversions. Should be replaced with Linktree, Stan Store, or a dedicated landing page linking to WhatsApp community, recipes download, or newsletter.
+          </p>
+        </div>
+
+        <div class="analysis-item">
+          <div class="analysis-item-title">🌿 Language &amp; Niche Fit</div>
+          <div class="score-bar">
+            <div class="score-track"><div class="score-fill" style="width:80%;background:var(--gradient-green)"></div></div>
+            <div class="score-label" style="color:var(--accent-green)">8/10</div>
+          </div>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:6px">
+            Hindi-language health content targeting Indian audience is an underserved, high-demand niche. Ayurveda + modern nutrition fusion is timely and trending. The account correctly identifies and occupies this space with cultural relevance.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-divider"></div>
+
+    <div class="sec-header">
+      <h2>Visual Consistency Analysis</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">🎨 Color Palette</div>
+        <div class="card-sub">Observed from profile & content</div>
+        <p style="font-size:13px;color:var(--text-muted);line-height:1.7">
+          Logo uses green + white with leaf/flame motif. Content reels appear to use varied backgrounds without a strict brand palette. <strong style="color:var(--accent-amber)">Inconsistent</strong> — no unified color system visible across analyzed thumbnails.
+        </p>
+        <div style="margin-top:14px;display:flex;gap:8px">
+          <div style="width:32px;height:32px;border-radius:6px;background:#22c55e" title="Primary Green"></div>
+          <div style="width:32px;height:32px;border-radius:6px;background:#ffffff;border:1px solid var(--border)" title="White"></div>
+          <div style="width:32px;height:32px;border-radius:6px;background:#f59e0b" title="Accent (possible)"></div>
+          <div style="width:32px;height:32px;border-radius:6px;background:#78350f" title="Earth tone"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📝 Typography & Text Overlays</div>
+        <div class="card-sub">In-reel text style</div>
+        <p style="font-size:13px;color:var(--text-muted);line-height:1.7">
+          Reels use Hindi text overlays to make content accessible without audio. Text appears bold and readable. No consistent font brand identified. Positive: text overlays aid muted viewing, which covers ~70% of social media consumption.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-title">🖼️ Thumbnail Strategy</div>
+        <div class="card-sub">Posts grid visual appeal</div>
+        <p style="font-size:13px;color:var(--text-muted);line-height:1.7">
+          Grid shows a mix of food imagery and text-based slides. No single "scroll-stopping" thumbnail format is consistently applied. Missing: faces on thumbnails (proven +38% CTR), bright contrast borders, or grid-level color coding by content type.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────── -->
+<!-- SECTION: CONTENT ANALYSIS                      -->
+<!-- ─────────────────────────────────────────────── -->
+<section id="content" class="section">
+  <div class="container">
+    <div class="sec-header">
+      <h2>Content Analysis</h2>
+      <p>Deep dive into content pillars, hook quality, caption strategy, and performance patterns</p>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:32px">
+      <div class="card">
+        <div class="card-title">📚 Content Pillars</div>
+        <div class="card-sub">Core topic categories identified from analyzed reels</div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(34,197,94,0.15);display:flex;align-items:center;justify-content:center;font-size:18px">☀️</div>
+            <div>
+              <div style="font-weight:600;font-size:14px">Morning Habits & Routines</div>
+              <div style="font-size:12px;color:var(--text-muted)">Tea, breakfast, empty stomach rules — 4 of 15 reels (27%)</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(168,85,247,0.15);display:flex;align-items:center;justify-content:center;font-size:18px">🥛</div>
+            <div>
+              <div style="font-weight:600;font-size:14px">Milk & Dairy Combinations</div>
+              <div style="font-size:12px;color:var(--text-muted)">Makhana milk, bedtime milk, food combos — 3 of 15 (20%)</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(99,102,241,0.15);display:flex;align-items:center;justify-content:center;font-size:18px">⚖️</div>
+            <div>
+              <div style="font-weight:600;font-size:14px">Weight Management</div>
+              <div style="font-size:12px;color:var(--text-muted)">Fruit choices, calorie tips, breakfast — 2 of 15 (13%)</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:center;font-size:18px">🌿</div>
+            <div>
+              <div style="font-weight:600;font-size:14px">Ayurvedic Remedies & Ingredients</div>
+              <div style="font-size:12px;color:var(--text-muted)">Coconut oil, jaggery, fennel — 3 of 15 (20%)</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(239,68,68,0.15);display:flex;align-items:center;justify-content:center;font-size:18px">❌</div>
+            <div>
+              <div style="font-weight:600;font-size:14px">Food Myth-Busting</div>
+              <div style="font-size:12px;color:var(--text-muted)">Wrong combos, tea beliefs, food dangers — 3 of 15 (20%)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🪝 Hook Quality Analysis</div>
+        <div class="card-sub">Performance ranked by hook type</div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px">
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span style="font-size:13px;font-weight:600">🔴 Myth-Busting / Warning</span>
+              <span style="font-size:13px;color:var(--accent-green);font-weight:700">avg 171K views</span>
+            </div>
+            <div style="font-size:12px;color:var(--text-muted)">Examples: "Morning tea harmful", "नेक्टर or acid?" — creates fear/curiosity. Highest performing category by far.</div>
+          </div>
+          <div style="border-top:1px solid var(--border);padding-top:12px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span style="font-size:13px;font-weight:600">🍽️ Recipe / Health Benefit</span>
+              <span style="font-size:13px;color:var(--accent-blue);font-weight:700">avg 118K views</span>
+            </div>
+            <div style="font-size:12px;color:var(--text-muted)">Makhana milk, energy laddu — aspirational and actionable. Second-highest performance category.</div>
+          </div>
+          <div style="border-top:1px solid var(--border);padding-top:12px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span style="font-size:13px;font-weight:600">☀️ Morning Routine</span>
+              <span style="font-size:13px;color:var(--accent-amber);font-weight:700">avg 52.6K views</span>
+            </div>
+            <div style="font-size:12px;color:var(--text-muted)">Best breakfast, jaggery+peanut — habitual but lower intrinsic urgency in hook.</div>
+          </div>
+          <div style="border-top:1px solid var(--border);padding-top:12px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span style="font-size:13px;font-weight:600">📚 Generic "Benefits of X"</span>
+              <span style="font-size:13px;color:var(--accent-red);font-weight:700">avg 24.8K views</span>
+            </div>
+            <div style="font-size:12px;color:var(--text-muted)">Curd benefits, coconut oil — overused format, low differentiation. Lowest performers.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:32px">
+      <div class="card">
+        <div class="card-title">✍️ Caption Quality Assessment</div>
+        <div class="card-sub">Analysis of caption strategy across reels</div>
+        <div class="analysis-item" style="background:rgba(239,68,68,0.05);border-color:rgba(239,68,68,0.2);margin-top:8px">
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.7">
+            <strong style="color:var(--accent-red)">Critical Issue:</strong> Captions appear to be short snippets without full text, hashtags, or CTAs. No structured caption formula observed. No "save this for later", "follow for more", or question prompts found. This severely limits engagement conversion and algorithmic distribution.
+          </p>
+        </div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:12px">
+          <li style="font-size:13px;color:var(--text-muted)">❌ No hashtag strategy visible in captions</li>
+          <li style="font-size:13px;color:var(--text-muted)">❌ No CTA (Call to Action) in captions</li>
+          <li style="font-size:13px;color:var(--text-muted)">❌ No save/share prompts observed</li>
+          <li style="font-size:13px;color:var(--text-muted)">❌ No line breaks or emojis for scannability</li>
+          <li style="font-size:13px;color:var(--text-muted)">✅ Captions are in Hindi matching audience language</li>
+          <li style="font-size:13px;color:var(--text-muted)">✅ Topic relevance is clear from caption snippet</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📊 Hook Avg Views Chart</div>
+        <div class="card-sub">Average views per hook type category</div>
+        <div class="chart-container">
+          <canvas id="hookChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-divider"></div>
+
+    <div class="sec-header">
+      <h2>Posting Consistency</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">📅 Posting Frequency</div>
+        <div class="card-sub">Based on reel shortcode analysis</div>
+        <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-top:8px">
+          The sequential reel shortcodes (Da- prefix) suggest recent, high-frequency posting. With 87 posts total and multiple reels posted in close succession, the account appears to post <strong style="color:var(--text-secondary)">daily or multiple times per week</strong>. This is positive for algorithm favor, but content quality vs. quantity balance needs monitoring.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-title">⏰ Optimal Timing</div>
+        <div class="card-sub">Recommended based on Indian audience patterns</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+          <div style="font-size:13px;color:var(--text-muted)">🌅 <strong style="color:var(--text-secondary)">6–9 AM IST</strong> — Morning scrollers (pre-work/school)</div>
+          <div style="font-size:13px;color:var(--text-muted)">🌞 <strong style="color:var(--text-secondary)">12–2 PM IST</strong> — Lunch break audience</div>
+          <div style="font-size:13px;color:var(--text-muted)">🌆 <strong style="color:var(--text-secondary)">7–10 PM IST</strong> — Prime time for Indian users</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔄 Content Mix</div>
+        <div class="card-sub">Recommended ratio vs. observed</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+          <div style="font-size:13px;color:var(--text-muted)">🎬 Reels: <strong style="color:var(--accent-green)">70%</strong> <span style="opacity:0.5">(observed: ~60%)</span></div>
+          <div style="font-size:13px;color:var(--text-muted)">🖼️ Posts/Carousels: <strong style="color:var(--accent-blue)">20%</strong></div>
+          <div style="font-size:13px;color:var(--text-muted)">📖 Stories: <strong style="color:var(--accent-purple)">10%</strong></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────── -->
+<!-- SECTION: REELS DATA TABLE                      -->
+<!-- ─────────────────────────────────────────────── -->
+<section id="reels" class="section">
+  <div class="container">
+    <div class="sec-header">
+      <h2>Reels Data Table</h2>
+      <p>All 15 reels analyzed — searchable, sortable, exportable</p>
+    </div>
+
+    <div class="table-controls">
+      <input type="text" class="search-input" id="reelSearch" placeholder="🔍 Search reels by topic, hook type..." onkeyup="filterReels()" />
+      <button class="export-btn" onclick="exportReelsCSV()">⬇ Export CSV</button>
+      <button class="export-btn" style="background:var(--gradient-purple)" onclick="exportReelsJSON()">⬇ Export JSON</button>
+    </div>
+
+    <div class="table-wrap">
+      <table id="reelsTable">
+        <thead>
+          <tr>
+            <th onclick="sortTable('reelsTable', 0)">#<span class="sort-icon">↕</span></th>
+            <th onclick="sortTable('reelsTable', 1)">Topic<span class="sort-icon">↕</span></th>
+            <th onclick="sortTable('reelsTable', 2)">Hook Type<span class="sort-icon">↕</span></th>
+            <th onclick="sortTable('reelsTable', 3)">Views<span class="sort-icon">↕</span></th>
+            <th onclick="sortTable('reelsTable', 4)">Likes<span class="sort-icon">↕</span></th>
+            <th onclick="sortTable('reelsTable', 5)">Comments<span class="sort-icon">↕</span></th>
+            <th onclick="sortTable('reelsTable', 6)">Eng. Rate<span class="sort-icon">↕</span></th>
+            <th>Performance</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody id="reelsBody">
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:24px;font-size:12px;color:var(--text-muted)">
+      * Engagement Rate = (Likes + Comments) / Views × 100<br>
+      * All data collected via live Instagram browser session on July 7, 2026
+    </div>
+
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────── -->
+<!-- SECTION: SWOT ANALYSIS                         -->
+<!-- ─────────────────────────────────────────────── -->
+<section id="swot" class="section">
+  <div class="container">
+    <div class="sec-header">
+      <h2>SWOT Analysis</h2>
+      <p>Strategic assessment grounded exclusively in observed data</p>
+    </div>
+
+    <div class="swot-grid">
+      <div class="swot-card swot-s">
+        <div class="swot-label">S</div>
+        <div class="swot-sublabel">Strengths</div>
+        <ul class="swot-list">
+          <li>Exceptional organic reach: 1.35M views with only 50 followers — algorithm is actively distributing content</li>
+          <li>Top reel hit 248K views — proven viral potential in this niche</li>
+          <li>Hindi-language content fills an underserved gap in nutrition education for Indian audiences</li>
+          <li>Ayurveda + modern science fusion is a highly resonant, growing content category</li>
+          <li>Catchy, memorable brand name "Calorie Ki Kahani" — story-driven positioning</li>
+          <li>4 highlights set up (Recipes, Myths, Diet Tips, Healthy यू) — organized information architecture</li>
+          <li>Myth-busting content drives strongest engagement and shares</li>
+          <li>High posting frequency — daily or near-daily — keeps account active on algorithm</li>
+          <li>Logo design is professional with clear brand symbolism (leaf, food, flame)</li>
+          <li>Public profile enables maximum discoverability</li>
+        </ul>
+      </div>
+
+      <div class="swot-card swot-w">
+        <div class="swot-label">W</div>
+        <div class="swot-sublabel">Weaknesses</div>
+        <ul class="swot-list">
+          <li>Critically low follower count (50) despite 87 posts — massive conversion gap</li>
+          <li>No hashtag strategy visible — missing keyword amplification entirely</li>
+          <li>No CTAs in captions — viewers have no prompt to follow, save, or comment</li>
+          <li>Link goes to Facebook ID (not a landing page or Linktree) — wasted traffic opportunity</li>
+          <li>Likes extremely low relative to views (avg 7.8 likes vs 89K views = 0.009% like rate)</li>
+          <li>Comments almost non-existent (avg 2.3/reel) — no community dialogue building</li>
+          <li>No visible color palette consistency across content — weak visual branding</li>
+          <li>Bio lacks social proof, specific niche claim, or measurable value proposition</li>
+          <li>No pinned posts to showcase best-performing or most informative content</li>
+          <li>Following 32 people with 50 followers — low authority ratio</li>
+          <li>No face/human presence on thumbnails reduces trust and emotional connection</li>
+        </ul>
+      </div>
+
+      <div class="swot-card swot-o">
+        <div class="swot-label">O</div>
+        <div class="swot-sublabel">Opportunities</div>
+        <ul class="swot-list">
+          <li>Hindi health content is massively underserved — huge TAM across Tier 1/2/3 Indian cities</li>
+          <li>Instagram algorithm already discovering and distributing content — convert this to followers with CTAs</li>
+          <li>Myth-busting niche has viral potential — build a series format around "Food Myths Debunked"</li>
+          <li>Collaboration with other Hindi health/wellness creators for cross-promotion</li>
+          <li>Educational carousel posts for saves and shares (currently not observed)</li>
+          <li>WhatsApp Community or newsletter for converting Instagram audience off-platform</li>
+          <li>YouTube Shorts cross-posting of top reels to diversify reach</li>
+          <li>Sponsored content from Indian wellness brands (FMCG, Ayurvedic supplements) once 1K+ followers</li>
+          <li>Recipe PDFs or diet plans as lead magnets with email list building</li>
+          <li>Festival/seasonal content calendar — leverages Indian cultural moments</li>
+          <li>Trending Hindi audio overlays to capture Reels-browse traffic</li>
+          <li>Polls and quiz stories to generate engagement data and interaction</li>
+        </ul>
+      </div>
+
+      <div class="swot-card swot-t">
+        <div class="swot-label">T</div>
+        <div class="swot-sublabel">Threats</div>
+        <ul class="swot-list">
+          <li>Established Hindi health creators (Rujuta Diwekar, Nikhil Vora, etc.) have massive audience advantages</li>
+          <li>Health misinformation regulations — Ayurvedic claims require careful framing to avoid content flags</li>
+          <li>Algorithm changes could reduce organic reach that currently sustains the account's visibility</li>
+          <li>Content saturation in nutrition/diet niche — hundreds of similar accounts posting daily</li>
+          <li>Without engagement, Instagram may deprioritize account despite high view counts</li>
+          <li>Risk of burnout from daily posting without strategy — content quality could decline</li>
+          <li>Low engagement ratio could signal low-quality content to advertisers (monetization blocker)</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────── -->
+<!-- SECTION: TOP 20 IMPROVEMENTS                   -->
+<!-- ─────────────────────────────────────────────── -->
+<section id="improvements" class="section">
+  <div class="container">
+    <div class="sec-header">
+      <h2>Top 20 Improvements</h2>
+      <p>Prioritized action items ranked by impact. Based exclusively on analyzed data.</p>
+    </div>
+
+    <div class="improve-list">
+
+      <div class="improve-card">
+        <div class="improve-num">01</div>
+        <div class="improve-body">
+          <div class="improve-title">Add a Strong CTA to Every Reel Caption</div>
+          <div class="improve-desc">Every caption must end with a clear call to action: "Follow करें daily health tips के लिए" or "Save करो याद रखने के लिए." Without CTAs, viewers consume and leave — your follow rate will remain near zero. This single fix can 10× your follow conversion rate.</div>
+        </div>
+        <div class="improve-tag tag-high">🔴 Critical</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">02</div>
+        <div class="improve-body">
+          <div class="improve-title">Build a Hashtag Strategy — 15-20 per Reel</div>
+          <div class="improve-desc">Zero hashtags detected in analyzed reels. Use a mix: 5 niche-specific (#weightlosstipsinhindi, #ayurvedatips), 5 medium (#healthyfood, #nutritionindia), 5 broad (#health, #fitness, #indianfood). Hashtags extend algorithmic distribution to interested users not yet following you.</div>
+        </div>
+        <div class="improve-tag tag-high">🔴 Critical</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">03</div>
+        <div class="improve-body">
+          <div class="improve-title">Replace Facebook Link with Linktree or Stan Store</div>
+          <div class="improve-desc">Your profile link goes to a Facebook page ID — this is dead traffic. Create a free Linktree or Stan Store with links to: WhatsApp community, a free recipe PDF, your YouTube channel (if any), or an Instagram highlight for new followers.</div>
+        </div>
+        <div class="improve-tag tag-high">🔴 Critical</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">04</div>
+        <div class="improve-body">
+          <div class="improve-title">Create a "Myth Monday" Reel Series</div>
+          <div class="improve-desc">Myth-busting reels are your highest performers (171K avg views vs 52K for other types). Build a recurring "Myth Monday" series with a recognizable intro/format. Series content trains the algorithm and your audience to expect and engage with new episodes.</div>
+        </div>
+        <div class="improve-tag tag-high">🔴 Critical</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">05</div>
+        <div class="improve-body">
+          <div class="improve-title">Pin 3 Best-Performing Reels to Profile Top</div>
+          <div class="improve-desc">Use Instagram's pin feature to display your top 3 reels (Makhana milk 248K, Morning tea 230K, Fruit choice 185K) prominently. New profile visitors will see your strongest content first, dramatically improving first-impression follow rates.</div>
+        </div>
+        <div class="improve-tag tag-high">🔴 Critical</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">06</div>
+        <div class="improve-body">
+          <div class="improve-title">Rewrite Bio for Specificity and Social Proof</div>
+          <div class="improve-desc">New bio formula: [Who you help] + [How] + [Proof/Credibility] + [CTA]. Example: "Helping Indians lose weight with kitchen foods 🥗 | Ayurveda + Modern Nutrition | 87 tips posted | New tip daily 👇". This makes the value proposition immediate and clear.</div>
+        </div>
+        <div class="improve-tag tag-high">🔴 Critical</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">07</div>
+        <div class="improve-body">
+          <div class="improve-title">Ask One Question per Caption to Drive Comments</div>
+          <div class="improve-desc">Average comments per reel: 2.3 — alarmingly low. Add one question at the end of every caption: "आप रोज़ सुबह चाय पीते हैं? Comment में बताओ 👇". Comments boost algorithmic ranking. The goal is to triple comment rate within 30 days.</div>
+        </div>
+        <div class="improve-tag tag-med">🟡 High</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">08</div>
+        <div class="improve-body">
+          <div class="improve-title">Add Face/Human to Thumbnails (Test A/B)</div>
+          <div class="improve-desc">None of the analyzed thumbnails showed a human face. Studies show thumbnails with faces get 38% higher click-through rates. Test 5 reels with a face thumbnail vs. food-only thumbnail and compare performance in Instagram Insights.</div>
+        </div>
+        <div class="improve-tag tag-med">🟡 High</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">09</div>
+        <div class="improve-body">
+          <div class="improve-title">Create an Educational Carousel Series (for Saves)</div>
+          <div class="improve-desc">Carousel posts get 3× more saves than single images. Create "5 signs you're eating wrong" or "Complete guide to morning nutrition" as 8-10 slide carousels. Saves are the #1 signal Instagram uses to determine content quality for distribution.</div>
+        </div>
+        <div class="improve-tag tag-med">🟡 High</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">10</div>
+        <div class="improve-body">
+          <div class="improve-title">Establish a Brand Color System</div>
+          <div class="improve-desc">Define 3 colors: primary (your current green), accent (warm saffron/turmeric #e07b39), and background (cream #faf7f2 or dark #1a1a1a). Apply consistently to all text overlays, thumbnail borders, and slides. A recognizable visual identity boosts brand recall in crowded feeds.</div>
+        </div>
+        <div class="improve-tag tag-med">🟡 High</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">11</div>
+        <div class="improve-body">
+          <div class="improve-title">Post at Peak IST Times (6–9 AM, 7–10 PM)</div>
+          <div class="improve-desc">Timing dramatically affects first-hour engagement. For Hindi health content targeting India, 6–9 AM (morning routine audience) and 7–10 PM (prime time) are peak windows. Use Meta Creator Studio to schedule posts during these windows consistently.</div>
+        </div>
+        <div class="improve-tag tag-med">🟡 High</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">12</div>
+        <div class="improve-body">
+          <div class="improve-title">Start a WhatsApp Community for Core Audience</div>
+          <div class="improve-desc">Build an off-platform community where loyal viewers can join for exclusive daily tips. Promote in Stories and captions: "WhatsApp पर daily tip पाने के लिए bio link पर जाएं." This creates a high-value, algorithm-independent audience base.</div>
+        </div>
+        <div class="improve-tag tag-med">🟡 High</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">13</div>
+        <div class="improve-body">
+          <div class="improve-title">Cross-Post Top Reels to YouTube Shorts</div>
+          <div class="improve-desc">Your best reels (248K, 230K views on Instagram) can reach millions on YouTube Shorts. Cross-posting to YouTube with adapted descriptions doubles distribution with zero extra production cost. Link Instagram in YouTube bio to drive cross-platform follows.</div>
+        </div>
+        <div class="improve-tag tag-med">🟡 High</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">14</div>
+        <div class="improve-body">
+          <div class="improve-title">Retire "Benefits of X" Format — Reframe as Myth or Recipe</div>
+          <div class="improve-desc">"Benefits of curd" (20K views) and "coconut oil benefits" (29K views) are your worst performers. The same information reframed as "5 things you're doing wrong with dahi" or "Why coconut oil beats your cooking oil" would likely 3–5× the views based on pattern analysis.</div>
+        </div>
+        <div class="improve-tag tag-med">🟡 High</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">15</div>
+        <div class="improve-body">
+          <div class="improve-title">Use Trending Hindi Audio in Reels</div>
+          <div class="improve-desc">Instagram surfaces reels using trending audio more aggressively. Check the Reels Explore page weekly for trending Indian music/beats. Adding trending audio to even educational content can boost reach by 50–200% without changing the visuals.</div>
+        </div>
+        <div class="improve-tag tag-med">🟡 High</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">16</div>
+        <div class="improve-body">
+          <div class="improve-title">Create a Highlight for "Start Here" or "Best Tips"</div>
+          <div class="improve-desc">New profile visitors don't know where to start. Add a 5th highlight called "Start Here" or "Best Tips" featuring your top 5–10 reels. This acts as an evergreen onboarding experience that increases follow rate from new visitors.</div>
+        </div>
+        <div class="improve-tag tag-low">🟢 Medium</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">17</div>
+        <div class="improve-body">
+          <div class="improve-title">Engage with 10–15 Accounts Daily in Your Niche</div>
+          <div class="improve-desc">Genuine engagement (not spam) on similar Hindi health accounts builds relationships and drives profile visits. Comment meaningfully on posts from accounts with 5K–50K followers. This brings you to their audience's attention without paid promotion.</div>
+        </div>
+        <div class="improve-tag tag-low">🟢 Medium</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">18</div>
+        <div class="improve-body">
+          <div class="improve-title">Start Weekly Instagram Stories with Polls</div>
+          <div class="improve-desc">Stories with polls, quizzes, and Q&A stickers build intimacy and engagement habit. Weekly Story themes: "Monday Myth Quiz", "Friday Tip of the Week", "Sunday Q&A." Stories also keep your account active during off-days from Reels posts.</div>
+        </div>
+        <div class="improve-tag tag-low">🟢 Medium</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">19</div>
+        <div class="improve-body">
+          <div class="improve-title">Reach out to 3 Hindi Health Micro-Creators for Collaboration</div>
+          <div class="improve-desc">Find 3 Hindi health creators with 5K–20K followers and propose a "reel collab" where you each share a tip in one video, or do a "duet/remix" of each other's reels. Cross-audience exposure from even one collaboration can bring 100–500 new followers organically.</div>
+        </div>
+        <div class="improve-tag tag-low">🟢 Medium</div>
+      </div>
+
+      <div class="improve-card">
+        <div class="improve-num">20</div>
+        <div class="improve-body">
+          <div class="improve-title">Build a "Season" Content Series (e.g., Monsoon Health Kit)</div>
+          <div class="improve-desc">Seasonal series content (Monsoon immunity, Winter warmth recipes, Summer cooling drinks) gets organic traction because users actively search for it. You already attempted this with the fennel syrup reel (42K). Build full 7–10 reel seasonal series for compounding effects.</div>
+        </div>
+        <div class="improve-tag tag-low">🟢 Medium</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────── -->
+<!-- SECTION: 30-DAY CONTENT PLAN                   -->
+<!-- ─────────────────────────────────────────────── -->
+<section id="plan30" class="section">
+  <div class="container">
+    <div class="sec-header">
+      <h2>30-Day Content Plan</h2>
+      <p>Day-by-day content calendar for maximum growth in the first month — based on what's proven to work</p>
+    </div>
+
+    <div class="card" style="margin-bottom:24px;background:rgba(34,197,94,0.05);border-color:rgba(34,197,94,0.2)">
+      <div class="card-title" style="color:var(--accent-green)">📋 Plan Philosophy</div>
+      <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-top:8px">
+        This 30-day plan doubles down on your strongest content types (myth-busting, recipe reveals) while introducing new engagement mechanics (CTAs, hashtags, questions, carousels). Each week has a theme. The first priority is converting existing high-reach into followers.
+      </p>
+    </div>
+
+    <!-- WEEK 1 -->
+    <div class="plan-week">
+      <div class="week-header">📅 Week 1 — Foundation Fix (Days 1–7)</div>
+      <div class="day-list">
+        <div class="day-item">
+          <div class="day-label">Day 1 — Mon</div>
+          <div>
+            <div class="day-content-title">Rewrite bio + add Linktree link</div>
+            <div class="day-content-desc">Update bio with specific value prop + target audience + CTA. Replace Facebook link with Linktree featuring WhatsApp join button and best reel link.</div>
+          </div>
+          <span class="content-type-pill pill-post">Profile Update</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 2 — Tue</div>
+          <div>
+            <div class="day-content-title">Reel: "5 चीज़ें जो आप सुबह गलत करते हैं" (Morning Myths)</div>
+            <div class="day-content-desc">Myth-busting format. Add 15 hashtags + CTA + question in caption. Pin to profile after posting.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 3 — Wed</div>
+          <div>
+            <div class="day-content-title">Carousel: "Complete Guide to Indian Morning Nutrition"</div>
+            <div class="day-content-desc">8-slide educational carousel. Caption: "Save for reference 📌". Targets saves as key metric for algorithm boost.</div>
+          </div>
+          <span class="content-type-pill pill-post">Carousel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 4 — Thu</div>
+          <div>
+            <div class="day-content-title">Reel: "दूध पीने का सही समय vs गलत समय" (Milk Timing)</div>
+            <div class="day-content-desc">Comparison/contrast format. Build on your milk+makhana success. Add saved tip CTA.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 5 — Fri</div>
+          <div>
+            <div class="day-content-title">Story: Poll — "आप नाश्ते में क्या खाते हैं?" (Breakfast poll)</div>
+            <div class="day-content-desc">2-option poll. Builds interactive habit. Share result on next Story with your recommendation.</div>
+          </div>
+          <span class="content-type-pill pill-story">Story</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 6 — Sat</div>
+          <div>
+            <div class="day-content-title">Reel: "चाय vs काढ़ा — सुबह क्या पीयें?" (Tea vs Herbal)</div>
+            <div class="day-content-desc">Continues on your proven morning tea niche. Contrast format. Compare popular vs healthy.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 7 — Sun</div>
+          <div>
+            <div class="day-content-title">Story: "Ask Me Anything — Nutrition Q&A"</div>
+            <div class="day-content-desc">Q&A sticker Story. Answer 5 questions in a Story series. This humanizes the account and builds community dialogue.</div>
+          </div>
+          <span class="content-type-pill pill-story">Story</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEEK 2 -->
+    <div class="plan-week">
+      <div class="week-header">📅 Week 2 — Myth Busting Series (Days 8–14)</div>
+      <div class="day-list">
+        <div class="day-item">
+          <div class="day-label">Day 8 — Mon</div>
+          <div>
+            <div class="day-content-title">🧨 Myth Monday: "खाने के बाद पानी पीना — सच या झूठ?"</div>
+            <div class="day-content-desc">Launch recurring "Myth Monday" series. Introduce with branded title card. Controversial enough to drive saves and comments.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 9 — Tue</div>
+          <div>
+            <div class="day-content-title">Reel: "Protein के बिना weight loss — क्या यह सच है?"</div>
+            <div class="day-content-desc">Weight loss + protein myth. Targets fitness audience. Use question hook format proven in top reel.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 10 — Wed</div>
+          <div>
+            <div class="day-content-title">Carousel: "Top 10 Ayurvedic Kitchen Ingredients"</div>
+            <div class="day-content-desc">Save-worthy reference carousel. Targets search for Ayurvedic content. Each slide = 1 ingredient + benefit.</div>
+          </div>
+          <span class="content-type-pill pill-post">Carousel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 11 — Thu</div>
+          <div>
+            <div class="day-content-title">Reel: "Ghee — दुश्मन या दोस्त? Real Truth"</div>
+            <div class="day-content-desc">Ghee myth-bust. Extremely popular debate in Indian health space. Contrast extreme views with science-backed middle ground.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 12 — Fri</div>
+          <div>
+            <div class="day-content-title">Story: Quiz — "इन 3 में से कौन सा food है सबसे healthy?"</div>
+            <div class="day-content-desc">Quiz sticker Story with 3 options. Reveal correct answer next slide with explanation. Drives repeat Story views.</div>
+          </div>
+          <span class="content-type-pill pill-story">Story</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 13 — Sat</div>
+          <div>
+            <div class="day-content-title">Reel: "रात को खाने का सही समय क्या है?"</div>
+            <div class="day-content-desc">Dinner timing content. Combine Ayurveda + modern research. "Golden rule" format works well for shares.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 14 — Sun</div>
+          <div>
+            <div class="day-content-title">Story: Milestone celebration + Thank you to followers</div>
+            <div class="day-content-desc">If you hit 100 followers this week, celebrate it. Community connection Stories build loyalty. Share your account's "why."</div>
+          </div>
+          <span class="content-type-pill pill-story">Story</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEEK 3 -->
+    <div class="plan-week">
+      <div class="week-header">📅 Week 3 — Recipe Reveals (Days 15–21)</div>
+      <div class="day-list">
+        <div class="day-item">
+          <div class="day-label">Day 15 — Mon</div>
+          <div>
+            <div class="day-content-title">🧨 Myth Monday: "Brown Rice vs White Rice — कौन सा सच में बेहतर?"</div>
+            <div class="day-content-desc">One of the most debated Indian food topics. Myth-busting format. Expect high views based on your tea reel precedent.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 16 — Tue</div>
+          <div>
+            <div class="day-content-title">Reel: "3 Ingredient Immunity Drink — रोज़ सुबह पीओ"</div>
+            <div class="day-content-desc">Recipe reel in Makhana-milk format (your top performer). Simple ingredients, strong health benefit hook, clear recipe steps.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 17 — Wed</div>
+          <div>
+            <div class="day-content-title">Carousel: "7-Day Healthy Breakfast Plan (Indian)"</div>
+            <div class="day-content-desc">Save-worthy plan carousel. Each slide = one day's breakfast. CTA: "Save for next week." High shareability for Indian families.</div>
+          </div>
+          <span class="content-type-pill pill-post">Carousel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 18 — Thu</div>
+          <div>
+            <div class="day-content-title">Reel: "Haldi Doodh — सही तरीका और सही समय"</div>
+            <div class="day-content-desc">Golden milk reel. Combine recipe + right timing + wrong combinations to avoid. Ayurveda-backed, mass-appeal topic.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 19 — Fri</div>
+          <div>
+            <div class="day-content-title">Story: "What I ate today" behind-the-scenes</div>
+            <div class="day-content-desc">Humanizing content. Authentic daily routine Story. Ask followers what they ate and use their answers for future content ideas.</div>
+          </div>
+          <span class="content-type-pill pill-story">Story</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 20 — Sat</div>
+          <div>
+            <div class="day-content-title">Reel: "Weight loss के लिए best Indian dinner options"</div>
+            <div class="day-content-desc">Weight loss + Indian food combination. High search volume topic. "What to eat at night" format. Tie into broader weight loss pillar.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 21 — Sun</div>
+          <div>
+            <div class="day-content-title">Story: Week 3 Recap + Ask for follower topic requests</div>
+            <div class="day-content-desc">Community engagement Story. Ask: "Next week किस topic पर Reel चाहिए?" Use poll or question sticker. This drives content ideas AND engagement.</div>
+          </div>
+          <span class="content-type-pill pill-story">Story</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEEK 4 -->
+    <div class="plan-week">
+      <div class="week-header">📅 Week 4 — Consolidation & Viral Push (Days 22–30)</div>
+      <div class="day-list">
+        <div class="day-item">
+          <div class="day-label">Day 22 — Mon</div>
+          <div>
+            <div class="day-content-title">🧨 Myth Monday: "फल खाने का सही समय — क्या सच है?"</div>
+            <div class="day-content-desc">Fruit timing myth (related to your successful fruit reel at 185K). Expand the fruit topic with a myth angle for stronger hook.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 23 — Tue</div>
+          <div>
+            <div class="day-content-title">Collaboration Reel (reach out NOW to partner)</div>
+            <div class="day-content-desc">Post a collab reel with a similar-niche creator. Each creator shares one tip. Tag each other and ask audiences to follow both.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 24 — Wed</div>
+          <div>
+            <div class="day-content-title">Carousel: "COMPLETE guide: What to eat at every meal"</div>
+            <div class="day-content-desc">10-slide comprehensive guide. Breakfast, lunch, snack, dinner recommendations. A reference post designed for mass saves and profile visits.</div>
+          </div>
+          <span class="content-type-pill pill-post">Carousel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 25 — Thu</div>
+          <div>
+            <div class="day-content-title">Reel: "Sugar से 5 गुना ज़्यादा dangerous — यह food"</div>
+            <div class="day-content-desc">High-controversy, high-urgency hook. Warning format (your best category). Creates curiosity gap that forces watch completion.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 26 — Fri</div>
+          <div>
+            <div class="day-content-title">Story: Behind the scenes — "How I make my Reels"</div>
+            <div class="day-content-desc">Creator transparency Story. Builds trust and humanizes the brand. Shows effort and expertise behind each reel.</div>
+          </div>
+          <span class="content-type-pill pill-story">Story</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 27 — Sat</div>
+          <div>
+            <div class="day-content-title">Reel: "Gut Health Fix — सिर्फ 7 दिनों में" (Gut Reset)</div>
+            <div class="day-content-desc">7-day challenge format. Viewers save to follow along. Drives daily check-ins and comments throughout the week.</div>
+          </div>
+          <span class="content-type-pill pill-reel">Reel</span>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Day 28–30</div>
+          <div>
+            <div class="day-content-title">Month-End Review: Insights Analysis + Repeat Best Formula</div>
+            <div class="day-content-desc">Check Instagram Insights for top reel of the month. Recreate the same format with a new topic. Stories: share your growth milestone with followers. Plan Month 2.</div>
+          </div>
+          <span class="content-type-pill pill-story">Review</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────── -->
+<!-- SECTION: 90-DAY GROWTH STRATEGY                -->
+<!-- ─────────────────────────────────────────────── -->
+<section id="strategy90" class="section">
+  <div class="container">
+    <div class="sec-header">
+      <h2>90-Day Growth Strategy</h2>
+      <p>Phased approach to transform @caloriekikahani from 50 to 1,000+ followers with monetization foundation</p>
+    </div>
+
+    <!-- PHASE 1 -->
+    <div class="strategy-phase">
+      <div class="phase-header">
+        <div class="phase-num" style="background:var(--gradient-green)">1</div>
+        <div>
+          <div class="phase-title">Phase 1: Fix the Foundation (Days 1–30)</div>
+          <div class="phase-subtitle">Goal: Reach 200 followers · Fix all critical issues · Establish posting systems</div>
+        </div>
+      </div>
+      <div class="phase-items">
+        <div class="phase-item" style="border-left-color:var(--accent-green)">
+          <div class="phase-item-title">🛠️ Profile & Bio Overhaul</div>
+          <div class="phase-item-desc">Rewrite bio with specific niche, audience, and CTA. Replace Facebook link with Linktree. Add "Start Here" highlight. Pin 3 best reels.</div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--accent-green)">
+          <div class="phase-item-title">📝 Caption System Implementation</div>
+          <div class="phase-item-desc">Every reel gets: 15–20 hashtags, a question, a CTA, and line breaks for readability. Create a caption template and use it for every post from Day 1.</div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--accent-green)">
+          <div class="phase-item-title">🔁 Weekly Myth Monday Series Launch</div>
+          <div class="phase-item-desc">Establish the recurring series on Monday. Create branded intro graphic for consistency. This trains the algorithm and your audience simultaneously.</div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--accent-green)">
+          <div class="phase-item-title">📊 Instagram Insights Monitoring Setup</div>
+          <div class="phase-item-desc">Check Insights weekly. Track: reach per reel, follower gain per reel, save rate, profile visits. Use this data to double down on what works.</div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--accent-green)">
+          <div class="phase-item-title">📱 Story Engagement Protocol (3×/week minimum)</div>
+          <div class="phase-item-desc">Post Stories with polls, Q&As, and quizzes 3 times per week. Stories are shown to existing followers and build the "close" relationship that drives follow loyalty.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="strategy-phase">
+      <div class="phase-header">
+        <div class="phase-num" style="background:var(--gradient-blue)">2</div>
+        <div>
+          <div class="phase-title">Phase 2: Build Community (Days 31–60)</div>
+          <div class="phase-subtitle">Goal: Reach 500 followers · Launch collaboration · Build WhatsApp community</div>
+        </div>
+      </div>
+      <div class="phase-items">
+        <div class="phase-item" style="border-left-color:var(--accent-blue)">
+          <div class="phase-item-title">🤝 Micro-Creator Collaboration Campaign</div>
+          <div class="phase-item-desc">Identify and reach out to 5 Hindi health creators (5K–30K followers). Propose joint reels, duets, or mutual shoutouts. Execute at least 2 collaborations this month.</div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--accent-blue)">
+          <div class="phase-item-title">💬 WhatsApp Community Launch</div>
+          <div class="phase-item-desc">Create a WhatsApp Community or broadcast list for "Daily Health Tips in Hindi." Promote in Stories and Reel captions. This builds an algorithm-independent audience base.</div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--accent-blue)">
+          <div class="phase-item-title">📚 Carousel Content Expansion</div>
+          <div class="phase-item-desc">Post 2 educational carousels per week targeting saves. Topics: "Complete Indian Diet Chart," "Seasonal Eating Guide," "Weekly Meal Plan Template." These compound over time via saves.</div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--accent-blue)">
+          <div class="phase-item-title">🎬 YouTube Shorts Cross-Posting</div>
+          <div class="phase-item-desc">Upload your top 5 Instagram reels to YouTube Shorts with adapted descriptions. Link Instagram in YouTube bio. Start cross-platform follower funneling.</div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--accent-blue)">
+          <div class="phase-item-title">📈 Viral Content Engineering</div>
+          <div class="phase-item-desc">Analyze your top 3 best-performing reels from Phase 1. Identify exactly what made them work (topic angle, hook word, thumbnail style). Create 3 "sequel" reels with the same formula and new topics.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="strategy-phase">
+      <div class="phase-header">
+        <div class="phase-num" style="background:var(--gradient-purple)">3</div>
+        <div>
+          <div class="phase-title">Phase 3: Monetization Foundation (Days 61–90)</div>
+          <div class="phase-subtitle">Goal: Reach 1,000+ followers · First brand partnership · Revenue stream ready</div>
+        </div>
+      </div>
+      <div class="phase-items">
+        <div class="phase-item" style="border-left-color:var(--accent-purple)">
+          <div class="phase-item-title">💰 First Brand Outreach (1K Followers Milestone)</div>
+          <div class="phase-item-desc">At 1,000 followers, reach out to Indian wellness brands: organic food companies, Ayurvedic supplement brands, healthy snack brands. Offer to create 1 sponsored reel per month. Rate: ₹2,000–5,000 per sponsored reel at this stage.</div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--accent-purple)">
+          <div class="phase-item-title">📱 Instagram Link Sticker Activation (at 1K)</div>
+          <div class="phase-item-desc">Once you hit 1,000 followers, activate the link sticker in Stories. Use it to drive traffic to: free recipe PDF download, WhatsApp community join, or affiliate product links.</div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--accent-purple)">
+          <div class="phase-item-title">📧 Email List / Lead Magnet Launch</div>
+          <div class="phase-item-desc">Create a free "7-Day Indian Weight Loss Meal Plan" PDF as a lead magnet. Offer it via Linktree in exchange for email. This builds a list that you own — immune to algorithm changes.</div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--accent-purple)">
+          <div class="phase-item-title">🎯 Niche Specialization — Own One Sub-Topic</div>
+          <div class="phase-item-desc">Based on 60 days of data, identify your single best-performing content theme. Double down on becoming THE authority on that specific topic in Hindi (e.g., "Morning nutrition," "Desi superfoods," "Indian gut health").</div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--accent-purple)">
+          <div class="phase-item-title">📊 90-Day Audit & Strategy Refresh</div>
+          <div class="phase-item-desc">Conduct a full Insights review at Day 90. Compare before/after metrics. Identify new opportunities. Plan Month 4–6 based on actual data, not assumptions. Set new 6-month targets.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI TARGETS -->
+    <div class="sec-divider"></div>
+    <div class="sec-header">
+      <h2>90-Day KPI Targets</h2>
+    </div>
+    <div class="grid-4">
+      <div class="stat-card green">
+        <div class="stat-label">Followers Target</div>
+        <div class="stat-value">1K+</div>
+        <div class="stat-detail">From current 50 (20× growth)</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-label">Avg Views/Reel</div>
+        <div class="stat-value">150K+</div>
+        <div class="stat-detail">With CTA + hashtag boost</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-label">Engagement Rate</div>
+        <div class="stat-value">3%+</div>
+        <div class="stat-detail">Up from current 1.4%</div>
+      </div>
+      <div class="stat-card amber">
+        <div class="stat-label">First Revenue</div>
+        <div class="stat-value">₹5K</div>
+        <div class="stat-detail">Via 1 brand partnership</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>Instagram Audit Dashboard · @caloriekikahani · Generated July 7, 2026 by Antigravity AI</p>
+  <p style="margin-top:4px">Data based on 15 reels analyzed via live Instagram session. All conclusions grounded in observed metrics only.</p>
+</footer>
+
+<!-- ─────────────────────────────────────────────── -->
+<!-- JAVASCRIPT                                      -->
+<!-- ─────────────────────────────────────────────── -->
+<script>
+// ── DATA ──
+const reelsData = [
+  { id:1, topic:'Calcium alternatives to milk', hook:'Educational - Nutritional comparison', views:58600, likes:3, comments:2, engRate:0.0085, url:'https://www.instagram.com/reel/DafyCgxBdJb/', caption:'इन 5 चीज़ों में दूध से ज़्यादा कैल्शियम - Calcium source alternatives' },
+  { id:2, topic:'Black coffee fitness benefits', hook:'Educational - Beverage tips', views:56200, likes:4, comments:3, engRate:0.0125, url:'https://www.instagram.com/reel/DafeiJGhFQf/', caption:'ब्लैक कॉफ़ी पीने के सही तरीका - Black coffee tips' },
+  { id:3, topic:'Right fruits for weight goals', hook:'Educational - Choice/Decision', views:185000, likes:10, comments:4, engRate:0.0076, url:'https://www.instagram.com/reel/DafKBkDxEkA/', caption:'सही चुनो फल - Fruits for weight loss/gain' },
+  { id:4, topic:'Rice Kanji gut health remedy', hook:'Recipe/Remedy', views:49300, likes:6, comments:4, engRate:0.0203, url:'https://www.instagram.com/reel/Dae2fQAxjxd/', caption:'राइस कांजी - Rice Kanji for Gut Health' },
+  { id:5, topic:'Best morning breakfast choices', hook:'Morning routine/Lifestyle', views:80800, likes:13, comments:3, engRate:0.0198, url:'https://www.instagram.com/reel/DadLnRPB-ow/', caption:'सुबह का बेस्ट नाश्ता - Healthy morning breakfast' },
+  { id:6, topic:'Energy laddu recipe with milk', hook:'Recipe', views:63300, likes:2, comments:2, engRate:0.0063, url:'https://www.instagram.com/reel/Dac5ZDlh6Nh/', caption:'जादुई एनर्जी लड्डू - Energy laddu with milk' },
+  { id:7, topic:'Morning tea on empty stomach warning', hook:'Myth-busting/Warning', views:230000, likes:4, comments:4, engRate:0.0035, url:'https://www.instagram.com/reel/DacmBKLxJ7d/', caption:'Morning tea on empty stomach - harmful' },
+  { id:8, topic:'Morning tea: nectar or acid?', hook:'Question hook/Contrast', views:113000, likes:14, comments:0, engRate:0.0124, url:'https://www.instagram.com/reel/DackvzaDdHm/', caption:'अमृत है या जहर - First tea: nectar or acid?' },
+  { id:9, topic:'Wrong food combinations with milk', hook:'Warning/Educational', views:75700, likes:7, comments:4, engRate:0.0145, url:'https://www.instagram.com/reel/DacQJZkR9OT/', caption:'दूध के साथ गलत खाना - Wrong food combinations' },
+  { id:10, topic:'Saunf sharbat summer drink', hook:'Seasonal recipe', views:42600, likes:6, comments:2, engRate:0.0188, url:'https://www.instagram.com/reel/Daa0RUThtB6/', caption:'सौंफ का शरबत - Fennel seed syrup for summers' },
+  { id:11, topic:'Curd/Dahi health benefits', hook:'Educational - Nutritional info', views:20100, likes:1, comments:1, engRate:0.0099, url:'https://www.instagram.com/reel/DaakqTPhwrH/', caption:'दही में क्या है खास - Benefits of Curd' },
+  { id:12, topic:'What to mix in milk before bed', hook:'Tips - Number-based', views:72600, likes:8, comments:2, engRate:0.0138, url:'https://www.instagram.com/reel/DaaUDozx--J/', caption:'रात को सोने से पहले दूध - Milk before sleeping with 3 things' },
+  { id:13, topic:'Coconut oil health benefits', hook:'Educational - Ingredient benefits', views:29500, likes:7, comments:1, engRate:0.0271, url:'https://www.instagram.com/reel/DaaIAiORilI/', caption:'Nariyal oil ke fayde - Coconut oil benefits' },
+  { id:14, topic:'Morning jaggery and peanut combo', hook:'Morning routine', views:24400, likes:6, comments:1, engRate:0.0287, url:'https://www.instagram.com/reel/DaZrWHkRDDh/', caption:'Subah gud aur moongfali - Jaggery and peanut' },
+  { id:15, topic:'Makhana milk recipe for sleep/health', hook:'Recipe/Health benefit', views:248000, likes:26, comments:2, engRate:0.0113, url:'https://www.instagram.com/reel/DaYBbMxBO8P/', caption:'Makhana wala doodh - Milk with Makhana before bed' }
+];
+
+// ── SECTION LABELS MAP ──
+const sectionLabels = {
+  summary:      '📊 Executive Summary',
+  profile:      '👤 Profile Audit',
+  content:      '🎬 Content Analysis',
+  reels:        '📱 Reels Data',
+  swot:         '⚖️ SWOT Analysis',
+  improvements: '🚀 Top 20 Improvements',
+  plan30:       '📅 30-Day Plan',
+  strategy90:   '🎯 90-Day Strategy'
+};
+
+// ── TABS ──
+function showTab(id, btn) {
+  // Hide all sections
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  // Reset desktop tabs
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  // Reset sidebar items
+  document.querySelectorAll('.sidebar-nav-item').forEach(t => t.classList.remove('active'));
+
+  // Show selected section
+  document.getElementById(id).classList.add('active');
+
+  // Activate desktop tab (if called from it)
+  if (btn) btn.classList.add('active');
+  else {
+    const dtab = document.getElementById('tab-' + id);
+    if (dtab) dtab.classList.add('active');
+  }
+
+  // Activate sidebar item
+  const sideItem = document.getElementById('side-' + id);
+  if (sideItem) sideItem.classList.add('active');
+
+  // Update mobile label
+  const mobileLabel = document.getElementById('mobileActiveLabel');
+  if (mobileLabel) mobileLabel.textContent = sectionLabels[id] || id;
+
+  // Scroll to top of content
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (id === 'reels') renderReelsTable(reelsData);
+  if (id === 'content' || id === 'summary') {
+    setTimeout(renderCharts, 100);
+  }
+}
+
+// ── SIDEBAR CONTROLS ──
+function toggleSidebar() {
+  const sidebar = document.getElementById('navSidebar');
+  const overlay = document.getElementById('navOverlay');
+  const btn = document.getElementById('hamburgerBtn');
+  const isOpen = sidebar.classList.contains('open');
+  if (isOpen) {
+    closeSidebar();
+  } else {
+    sidebar.classList.add('open');
+    overlay.classList.add('open');
+    btn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeSidebar() {
+  const sidebar = document.getElementById('navSidebar');
+  const overlay = document.getElementById('navOverlay');
+  const btn = document.getElementById('hamburgerBtn');
+  sidebar.classList.remove('open');
+  overlay.classList.remove('open');
+  btn.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── RENDER REELS TABLE ──
+function renderReelsTable(data) {
+  const maxViews = Math.max(...data.map(r => r.views));
+  const tbody = document.getElementById('reelsBody');
+  tbody.innerHTML = data.map(r => {
+    const pct = ((r.views / maxViews) * 100).toFixed(0);
+    let perf, badge;
+    if (r.views >= 150000) { perf = 'perf-high'; badge = '<span class="badge badge-green">🔥 Top</span>'; }
+    else if (r.views >= 60000) { perf = 'perf-mid'; badge = '<span class="badge badge-amber">📊 Mid</span>'; }
+    else { perf = 'perf-low'; badge = '<span class="badge badge-red">📉 Low</span>'; }
+    return `<tr>
+      <td style="color:var(--text-muted)">${r.id}</td>
+      <td style="max-width:200px;color:var(--text-primary);font-weight:500">${r.topic}</td>
+      <td><span class="badge badge-blue" style="font-size:10px">${r.hook}</span></td>
+      <td>
+        <div class="view-bar">
+          <div class="view-bar-track"><div class="view-bar-fill" style="width:${pct}%"></div></div>
+          <div class="view-bar-num ${perf}">${fmtNum(r.views)}</div>
+        </div>
+      </td>
+      <td style="color:var(--text-primary)">${r.likes}</td>
+      <td style="color:var(--text-primary)">${r.comments}</td>
+      <td style="color:var(--accent-amber)">${(r.engRate * 100).toFixed(2)}%</td>
+      <td>${badge}</td>
+      <td><a href="${r.url}" target="_blank" class="td-link">▶ View</a></td>
+    </tr>`;
+  }).join('');
+}
+
+function fmtNum(n) {
+  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n/1000).toFixed(1) + 'K';
+  return n.toString();
+}
+
+// ── FILTER ──
+function filterReels() {
+  const q = document.getElementById('reelSearch').value.toLowerCase();
+  const filtered = reelsData.filter(r =>
+    r.topic.toLowerCase().includes(q) ||
+    r.hook.toLowerCase().includes(q) ||
+    r.caption.toLowerCase().includes(q)
+  );
+  renderReelsTable(filtered);
+}
+
+// ── SORT ──
+let sortDir = {};
+function sortTable(tableId, colIdx) {
+  sortDir[colIdx] = !sortDir[colIdx];
+  const keys = ['id','topic','hook','views','likes','comments','engRate'];
+  const key = keys[colIdx];
+  const sorted = [...reelsData].sort((a, b) => {
+    const av = a[key], bv = b[key];
+    if (typeof av === 'number') return sortDir[colIdx] ? av - bv : bv - av;
+    return sortDir[colIdx] ? String(av).localeCompare(String(bv)) : String(bv).localeCompare(String(av));
+  });
+  renderReelsTable(sorted);
+}
+
+// ── EXPORT CSV ──
+function exportReelsCSV() {
+  const headers = ['ID','Topic','Hook Type','Views','Likes','Comments','Engagement Rate','URL'];
+  const rows = reelsData.map(r => [r.id, `"${r.topic}"`, `"${r.hook}"`, r.views, r.likes, r.comments, (r.engRate*100).toFixed(2)+'%', r.url]);
+  const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+  download('caloriekikahani_reels.csv', csv, 'text/csv');
+}
+
+// ── EXPORT JSON ──
+function exportReelsJSON() {
+  download('caloriekikahani_data.json', JSON.stringify(reelsData, null, 2), 'application/json');
+}
+
+function download(name, content, type) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], {type}));
+  a.download = name; a.click();
+}
+
+// ── CHARTS ──
+let chartsRendered = false;
+function renderCharts() {
+  if (chartsRendered) return;
+  chartsRendered = true;
+
+  const sorted = [...reelsData].sort((a, b) => b.views - a.views);
+  const labels = sorted.map(r => r.topic.length > 22 ? r.topic.substring(0,22)+'…' : r.topic);
+  const views = sorted.map(r => r.views);
+  const colors = sorted.map(r => r.views >= 150000 ? '#22c55e' : r.views >= 60000 ? '#f59e0b' : '#ef4444');
+
+  // Views Bar Chart
+  const ctx1 = document.getElementById('viewsBarChart');
+  if (ctx1) {
+    new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{ label: 'Views', data: views, backgroundColor: colors, borderRadius: 6 }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: {
+          callbacks: { label: ctx => ' ' + fmtNum(ctx.parsed.x) + ' views' }
+        }},
+        scales: {
+          x: { ticks: { color: '#5a5a7a', callback: v => fmtNum(v) }, grid: { color: 'rgba(42,42,61,0.5)' } },
+          y: { ticks: { color: '#9898b8', font: { size: 11 } }, grid: { display: false } }
+        }
+      }
+    });
+  }
+
+  // Theme Donut
+  const ctx2 = document.getElementById('themeDonut');
+  if (ctx2) {
+    new Chart(ctx2, {
+      type: 'doughnut',
+      data: {
+        labels: ['Morning Habits', 'Milk & Dairy', 'Ayurvedic Remedies', 'Myth-Busting', 'Weight Management', 'Recipe'],
+        datasets: [{ data: [27, 20, 20, 20, 13, 13], backgroundColor: ['#22c55e','#6366f1','#f59e0b','#ef4444','#a855f7','#14b8a6'], borderWidth: 0, hoverOffset: 8 }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'right', labels: { color: '#9898b8', font: { size: 11 }, padding: 12 } } },
+        cutout: '65%'
+      }
+    });
+  }
+
+  // Hook Chart
+  const ctx3 = document.getElementById('hookChart');
+  if (ctx3) {
+    new Chart(ctx3, {
+      type: 'bar',
+      data: {
+        labels: ['Myth-Busting', 'Recipe / Health', 'Morning Routine', 'Benefits of X'],
+        datasets: [{
+          label: 'Avg Views',
+          data: [171000, 118000, 52600, 24800],
+          backgroundColor: ['#22c55e','#6366f1','#f59e0b','#ef4444'],
+          borderRadius: 8
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: {
+          callbacks: { label: ctx => ' avg ' + fmtNum(ctx.parsed.y) + ' views' }
+        }},
+        scales: {
+          x: { ticks: { color: '#9898b8', font: { size: 11 } }, grid: { display: false } },
+          y: { ticks: { color: '#5a5a7a', callback: v => fmtNum(v) }, grid: { color: 'rgba(42,42,61,0.5)' } }
+        }
+      }
+    });
+  }
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', () => {
+  renderReelsTable(reelsData);
+  setTimeout(renderCharts, 200);
+});
+</script>
+
+</body>
+</html>
