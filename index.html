@@ -238,6 +238,8 @@
       transition: opacity 0.25s;
     }
     .nav-overlay.open { opacity: 1; }
+    /* keep topbar behind the sidebar/overlay once menu is open, so it doesn't slice across the nav list */
+    body.sidebar-active .mobile-topbar { z-index: 140; }
 
     /* ── SIDEBAR PANEL ── */
     .nav-sidebar {
@@ -2510,6 +2512,7 @@ function toggleSidebar() {
     sidebar.classList.add('open');
     overlay.classList.add('open');
     btn.classList.add('open');
+    document.body.classList.add('sidebar-active');
     document.body.style.overflow = 'hidden';
   }
 }
@@ -2521,6 +2524,7 @@ function closeSidebar() {
   sidebar.classList.remove('open');
   overlay.classList.remove('open');
   btn.classList.remove('open');
+  document.body.classList.remove('sidebar-active');
   document.body.style.overflow = '';
 }
 
